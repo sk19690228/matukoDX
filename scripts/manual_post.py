@@ -29,7 +29,7 @@ def main():
         sys.exit(1)
 
     date_str = os.environ.get("TARGET_DATE", "").strip() or today_jst_str()
-    filename = f"iphone_reposts_{date_str}.md"
+    filename = f"uranai_reposts_{date_str}.md"
 
     markdown_text = fetch_markdown_from_drive(filename)
     if markdown_text is None:

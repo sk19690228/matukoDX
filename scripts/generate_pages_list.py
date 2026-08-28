@@ -2,7 +2,7 @@
 GitHub Pages で公開する、当日分ポスト一覧ページ (public/index.html) を生成する。
 
 publish_list.yml から定期的に実行され、Google Drive 上の
-iphone_reposts_YYYYMMDD.md を毎回読み込んで、各ポストのリプライ文・
+uranai_reposts_YYYYMMDD.md を毎回読み込んで、各ポストのリプライ文・
 投稿ステータス（results/manual_reply_status_YYYYMMDD.json、
 manual_post.yml が更新する）を反映したページを生成する。
 
@@ -88,6 +88,10 @@ header.app-header { display: flex; align-items: baseline; justify-content: space
 .card-top { display: flex; align-items: center; justify-content: space-between; }
 .index-badge { font-size: 1.7rem; font-weight: 800; }
 .index-badge .of { font-size: 1rem; font-weight: 600; color: var(--text-muted); }
+.id-row { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border-radius: 10px; padding: 8px 10px; }
+.id-row .id-label { font-size: .72rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+.id-row .id-value { flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; overflow-x: auto; white-space: nowrap; }
+.btn-copy-id { background: var(--surface); color: var(--text); border: 1.5px solid var(--border); padding: 7px 12px; font-size: .78rem; white-space: nowrap; }
 .step-label { font-size: .72rem; font-weight: 700; color: var(--text-muted); letter-spacing: .04em; text-transform: uppercase; margin: 0; }
 .source-box { border-left: 3px solid var(--border); padding: 2px 0 2px 12px; font-size: .85rem; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; word-break: break-word; max-height: 120px; overflow-y: auto; }
 .reply-box { background: var(--surface-2); border-radius: 12px; padding: 14px 16px; font-size: 1rem; font-weight: 500; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
@@ -285,6 +289,24 @@ SCRIPT = r"""
         '<span class="badge ' + es + '">' + statusLabel(es) + '</span>';
       card.appendChild(top);
 
+      var idRow = document.createElement("div");
+      idRow.className = "id-row";
+      var idLabel = document.createElement("span");
+      idLabel.className = "id-label";
+      idLabel.textContent = "ID";
+      var idValue = document.createElement("code");
+      idValue.className = "id-value";
+      idValue.textContent = post.id;
+      var idCopyBtn = document.createElement("button");
+      idCopyBtn.type = "button";
+      idCopyBtn.className = "btn-copy-id";
+      idCopyBtn.textContent = "IDをコピー";
+      idCopyBtn.addEventListener("click", function () { copyText(post.id); });
+      idRow.appendChild(idLabel);
+      idRow.appendChild(idValue);
+      idRow.appendChild(idCopyBtn);
+      card.appendChild(idRow);
+
       if (post.error) {
         var errBox = document.createElement("div");
         errBox.className = "error-box";
@@ -456,7 +478,7 @@ def render_html(date_str, posts, status, replies, generated_at):
 
 def main():
     date_str = today_jst_str()
-    filename = f"iphone_reposts_{date_str}.md"
+    filename = f"uranai_reposts_{date_str}.md"
 
     print(f"[INFO] Google Drive から {filename} を取得します。")
     markdown_text = fetch_markdown_from_drive(filename)

@@ -1,18 +1,20 @@
 # X リプライボット 認証情報セットアップ手順
 
-Google Drive 上の `iphone_reposts_YYYYMMDD.md` を読み込み、Xへリプライを
+Google Drive 上の `uranai_reposts_YYYYMMDD.md` を読み込み、Xへリプライを
 投稿するための認証情報（Google Drive / X API）のセットアップ手順。
 
 投稿自体は自動実行ではなく、GitHub PagesとActionsを使ってスマホから手動で
 行う運用になっている。一覧の見方・投稿の操作手順は
 [docs/MOBILE_POSTING.md](./MOBILE_POSTING.md) を参照。
 
-## 1. iphone_reposts_YYYYMMDD.md のフォーマット
+## 1. uranai_reposts_YYYYMMDD.md のフォーマット
 
-Google Drive にこの命名規則でファイルを保存しておく（例: `iphone_reposts_20260814.md`）。
+Google Driveの「uranai repost」フォルダ内に、この命名規則でファイルを保存しておく
+（例: `uranai_reposts_20260814.md`）。検索対象をこのフォルダに限定したい場合は、
+フォルダのIDを `GOOGLE_DRIVE_FOLDER_ID` としてGitHub Secretsに登録する（手順4参照）。
 
 ```markdown
-# iPhone Emotional Posts Repost - 2026-08-15
+# Uranai Posts Repost - 2026-08-15
 
 ## 1
 **元ポスト文**

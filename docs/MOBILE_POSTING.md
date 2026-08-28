@@ -4,11 +4,11 @@
 手動でXへリプライを投稿する運用。
 
 - **リプライ文の作成**: 1日数回、Claude Codeが自動で当日分の
-  `iphone_reposts_YYYYMMDD.md` を取得し、マツコ・デラックス思考パターンの
+  `uranai_reposts_YYYYMMDD.md` を取得し、マツコ・デラックス思考パターンの
   リプライ文を `results/replies_YYYYMMDD.json` として作成・PR作成・マージまで行う
   （下記「リプライ文の自動作成」参照）。
 - **一覧の閲覧**: `publish_list.yml` が定期的に（JST 5:00〜22:00の30分おき）と
-  投稿直後に、Google Drive上の当日分 `iphone_reposts_YYYYMMDD.md` を読み込んで
+  投稿直後に、Google Drive上の当日分 `uranai_reposts_YYYYMMDD.md` を読み込んで
   GitHub Pagesに一覧ページを自動公開する（`scripts/generate_pages_list.py`）。
 - **投稿の実行**: `manual_post.yml`（Actionsのworkflow_dispatch）に
   投稿したいポストのIDを入力して実行すると、そのポストだけにXへリプライする
@@ -43,8 +43,8 @@
 1日数回、Claude Codeが定期実行のRoutineとして自動で以下を行う。
 
 1. `dump_markdown.yml`（Actionsのworkflow_dispatch）を使って当日分の
-   `iphone_reposts_YYYYMMDD.md` をGoogle Driveから取得する
-   （`scripts/dump_markdown.py`、実行ログにmarkdown本文を出力するだけの
+   `uranai_reposts_YYYYMMDD.md`（Google Driveの「uranai repost」フォルダ内）を
+   取得する（`scripts/dump_markdown.py`、実行ログにmarkdown本文を出力するだけの
    軽量なスクリプト）。
 2. まだGoogle Driveに当日分ファイルが無い場合は、しばらく待って再試行する。
 3. 各ポストの内容に合わせてマツコ・デラックス思考パターンのリプライ文
