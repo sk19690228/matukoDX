@@ -1,5 +1,5 @@
 """
-指定日（省略時は当日 JST）の iphone_reposts_YYYYMMDD.md を
+指定日（省略時は当日 JST）の uranai_reposts_YYYYMMDD.md を
 Google Driveから取得し、標準出力にそのまま出力する。
 
 毎日のリプライ文自動作成フロー（GitHub Actionsの workflow_dispatch
@@ -14,7 +14,7 @@ from drive_reply_common import fetch_markdown_from_drive, today_jst_str
 
 def main():
     date_str = os.environ.get("TARGET_DATE", "").strip() or today_jst_str()
-    filename = f"iphone_reposts_{date_str}.md"
+    filename = f"uranai_reposts_{date_str}.md"
 
     print(f"[INFO] Google Drive から {filename} を取得します。")
     markdown_text = fetch_markdown_from_drive(filename)

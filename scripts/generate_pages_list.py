@@ -2,7 +2,7 @@
 GitHub Pages で公開する、当日分ポスト一覧ページ (public/index.html) を生成する。
 
 publish_list.yml から定期的に実行され、Google Drive 上の
-iphone_reposts_YYYYMMDD.md を毎回読み込んで、各ポストのリプライ文・
+uranai_reposts_YYYYMMDD.md を毎回読み込んで、各ポストのリプライ文・
 投稿ステータス（results/manual_reply_status_YYYYMMDD.json、
 manual_post.yml が更新する）を反映したページを生成する。
 
@@ -478,7 +478,7 @@ def render_html(date_str, posts, status, replies, generated_at):
 
 def main():
     date_str = today_jst_str()
-    filename = f"iphone_reposts_{date_str}.md"
+    filename = f"uranai_reposts_{date_str}.md"
 
     print(f"[INFO] Google Drive から {filename} を取得します。")
     markdown_text = fetch_markdown_from_drive(filename)

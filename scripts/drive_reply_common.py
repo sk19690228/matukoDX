@@ -1,12 +1,12 @@
 """
 X 自動リプライボットの共通ユーティリティ。
 
-Google Drive 上の iphone_reposts_YYYYMMDD.md を読み込み、
+Google Drive 上の uranai_reposts_YYYYMMDD.md を読み込み、
 X API v2 (OAuth 1.0a User Context) でリプライを投稿するための
 共通処理をまとめている。plan_replies.py / manual_post.py /
 generate_pages_list.py から利用する。
 
---- iphone_reposts_YYYYMMDD.md のフォーマット ---
+--- uranai_reposts_YYYYMMDD.md のフォーマット ---
 
 ## 1
 **元ポスト文**
