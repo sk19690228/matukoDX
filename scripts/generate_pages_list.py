@@ -88,6 +88,10 @@ header.app-header { display: flex; align-items: baseline; justify-content: space
 .card-top { display: flex; align-items: center; justify-content: space-between; }
 .index-badge { font-size: 1.7rem; font-weight: 800; }
 .index-badge .of { font-size: 1rem; font-weight: 600; color: var(--text-muted); }
+.id-row { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border-radius: 10px; padding: 8px 10px; }
+.id-row .id-label { font-size: .72rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+.id-row .id-value { flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; overflow-x: auto; white-space: nowrap; }
+.btn-copy-id { background: var(--surface); color: var(--text); border: 1.5px solid var(--border); padding: 7px 12px; font-size: .78rem; white-space: nowrap; }
 .step-label { font-size: .72rem; font-weight: 700; color: var(--text-muted); letter-spacing: .04em; text-transform: uppercase; margin: 0; }
 .source-box { border-left: 3px solid var(--border); padding: 2px 0 2px 12px; font-size: .85rem; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; word-break: break-word; max-height: 120px; overflow-y: auto; }
 .reply-box { background: var(--surface-2); border-radius: 12px; padding: 14px 16px; font-size: 1rem; font-weight: 500; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
@@ -284,6 +288,24 @@ SCRIPT = r"""
         '<div class="index-badge">' + (activeIndex + 1) + '<span class="of"> / ' + posts.length + '</span></div>' +
         '<span class="badge ' + es + '">' + statusLabel(es) + '</span>';
       card.appendChild(top);
+
+      var idRow = document.createElement("div");
+      idRow.className = "id-row";
+      var idLabel = document.createElement("span");
+      idLabel.className = "id-label";
+      idLabel.textContent = "ID";
+      var idValue = document.createElement("code");
+      idValue.className = "id-value";
+      idValue.textContent = post.id;
+      var idCopyBtn = document.createElement("button");
+      idCopyBtn.type = "button";
+      idCopyBtn.className = "btn-copy-id";
+      idCopyBtn.textContent = "IDをコピー";
+      idCopyBtn.addEventListener("click", function () { copyText(post.id); });
+      idRow.appendChild(idLabel);
+      idRow.appendChild(idValue);
+      idRow.appendChild(idCopyBtn);
+      card.appendChild(idRow);
 
       if (post.error) {
         var errBox = document.createElement("div");
