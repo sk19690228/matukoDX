@@ -44,7 +44,7 @@ jobs:
           GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
           GOOGLE_OAUTH_REFRESH_TOKEN: ${{ secrets.GOOGLE_OAUTH_REFRESH_TOKEN }}
           GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
-          TARGET_DATE: ${{ inputs.date }}
+          TARGET_DATE: ${{ github.event.inputs.date }}
         run: python scripts/generate_pages_list.py
 
       - name: Pagesの設定
