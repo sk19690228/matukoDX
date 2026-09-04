@@ -481,7 +481,12 @@ def main():
     filename = f"uranai_reposts_{date_str}.md"
 
     print(f"[INFO] Google Drive から {filename} を取得します。")
-    markdown_text = fetch_markdown_from_drive(filename)
+    try:
+        markdown_text = fetch_markdown_from_drive(filename)
+    except Exception as e:
+        print(f"[ERROR] Google Drive へのアクセスに失敗しました: {e}")
+        markdown_text = None
+
     if markdown_text is None:
         print(f"[WARN] {filename} が Google Drive に見つかりませんでした。")
         posts = []
