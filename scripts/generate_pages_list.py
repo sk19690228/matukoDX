@@ -477,7 +477,7 @@ def render_html(date_str, posts, status, replies, generated_at):
 
 
 def main():
-    date_str = today_jst_str()
+    date_str = os.environ.get("TARGET_DATE") or today_jst_str()
     filename = f"uranai_reposts_{date_str}.md"
 
     print(f"[INFO] Google Drive から {filename} を取得します。")

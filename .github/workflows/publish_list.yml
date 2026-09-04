@@ -5,6 +5,10 @@ on:
     # JST 05:00-22:00 の間、30分おきに一覧を更新（UTC 20:00-翌13:00）
     - cron: '0,30 20-23,0-13 * * *'
   workflow_dispatch:
+    inputs:
+      date:
+        description: '対象日 YYYYMMDD（省略時は当日JST）'
+        required: false
   workflow_run:
     workflows: ["Manual Post to X"]
     types: [completed]
@@ -40,6 +44,7 @@ jobs:
           GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
           GOOGLE_OAUTH_REFRESH_TOKEN: ${{ secrets.GOOGLE_OAUTH_REFRESH_TOKEN }}
           GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+          TARGET_DATE: ${{ inputs.date }}
         run: python scripts/generate_pages_list.py
 
       - name: Pagesの設定
