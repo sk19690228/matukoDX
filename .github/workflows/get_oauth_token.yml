@@ -1,0 +1,109 @@
+name: Get Google OAuth Refresh Token
+
+on:
+  workflow_dispatch:
+
+jobs:
+  get-token:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python環境のセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 依存ライブラリのインストール
+        run: |
+          pip install google-auth-oauthlib google-auth-httplib2
+
+      - name: OAuth認証スクリプトを実行
+        env:
+          GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+          GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+        run: |
+          python - << 'EOF'
+          import os
+          import json
+          from google_auth_oauthlib.flow import InstalledAppFlow
+
+          CLIENT_ID = os.environ['GOOGLE_OAUTH_CLIENT_ID']
+          CLIENT_SECRET = os.environ['GOOGLE_OAUTH_CLIENT_SECRET']
+          SCOPES = ['https://www.googleapis.com/auth/drive']
+
+          # OAuth 2.0 credentials 設定
+          client_config = {
+              "installed": {
+                  "client_id": CLIENT_ID,
+                  "client_secret": CLIENT_SECRET,
+                  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                  "token_uri": "https://oauth2.googleapis.com/token",
+                  "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob"]  # Headless環境用
+              }
+          }
+
+          flow = InstalledAppFlow.from_client_config(client_config, SCOPES)
+
+          # Authorization URL を生成（ブラウザ認証用）
+          auth_uri, _ = flow.authorization_url(prompt='consent', access_type='offline')
+
+          print("\n" + "="*80)
+          print("🔐 Google Drive アクセス認可が必要です")
+          print("="*80)
+          print("\n以下のリンクをブラウザで開いてください：")
+          print(f"\n{auth_uri}\n")
+          print("="*80)
+          print("認可後、表示される認可コードをコピーしてください")
+          print("="*80 + "\n")
+
+          # ユーザーから認可コードを入力（GitHub Actions の出力から手動で入力）
+          # 注：GitHub Actions では対話的入力が難しいため、別方法を使用
+          print("⚠️ このワークフローでは自動取得ができません。")
+          print("以下の手順を実行してください：")
+          print("\n1️⃣ 上記のリンクをブラウザで開く")
+          print("2️⃣ sk19690228@gmail.com でログイン")
+          print("3️⃣ 『Google Drive へのアクセスを許可』をクリック")
+          print("4️⃣ 表示される認可コードをコピー")
+          print("5️⃣ 以下のコマンドをローカルで実行：\n")
+
+          # ローカル実行用スクリプトを生成
+          script = f"""python - << 'SCRIPT'
+import os
+from google_auth_oauthlib.flow import InstalledAppFlow
+
+CLIENT_ID = "{CLIENT_ID}"
+CLIENT_SECRET = "{CLIENT_SECRET}"
+SCOPES = ['https://www.googleapis.com/auth/drive']
+
+client_config = {{
+    "installed": {{
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob"]
+    }}
+}}
+
+flow = InstalledAppFlow.from_client_config(client_config, SCOPES)
+creds = flow.run_console()  # ターミナルでの認証
+
+print("\\n✅ 新しい Refresh Token:")
+print(creds.refresh_token)
+SCRIPT"""
+
+          print(script)
+
+          EOF
+
+      - name: 結果を表示
+        run: |
+          echo "✅ ワークフロー完了"
+          echo ""
+          echo "📋 次のステップ："
+          echo "1. 上記のリンクをブラウザで開く"
+          echo "2. Google アカウントで認可"
+          echo "3. 新しい Refresh Token を取得"
+          echo "4. GitHub Secrets の GOOGLE_OAUTH_REFRESH_TOKEN を更新"
