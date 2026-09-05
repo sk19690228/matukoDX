@@ -476,6 +476,74 @@ def render_html(date_str, posts, status, replies, generated_at):
 """
 
 
+LEGAL_STYLE = """
+body { max-width: 640px; margin: 0 auto; padding: 32px 20px 64px; font-family: -apple-system, "Hiragino Sans", sans-serif; line-height: 1.8; color: #1B1D22; background: #F5F6F8; }
+h1 { font-size: 1.3rem; }
+h2 { font-size: 1.05rem; margin-top: 28px; }
+p { color: #333; }
+a { color: #FF5A36; }
+"""
+
+
+def render_privacy_html():
+    return f"""<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プライバシーポリシー | マツコ返信文作成アプリ</title>
+<style>{LEGAL_STYLE}</style>
+</head>
+<body>
+<h1>プライバシーポリシー</h1>
+<p>本アプリケーション「マツコ・デラックス思考パターン返信文作成アプリ」（以下「本アプリ」）は、
+開発者個人が私的に利用するためのツールであり、一般公開・第三者への提供は行っていません。</p>
+
+<h2>取得する情報</h2>
+<p>本アプリは Google Drive API を通じて、開発者自身が指定した Google Drive
+フォルダ内の Markdown ファイルを読み取り専用で取得します。取得した内容は
+X（旧Twitter）への返信文候補を作成する目的にのみ使用します。</p>
+
+<h2>情報の保存・共有</h2>
+<p>取得したデータは開発者が管理する GitHub リポジトリおよび GitHub Pages 上でのみ
+処理・表示され、第三者への提供・販売は一切行いません。</p>
+
+<h2>お問い合わせ</h2>
+<p>本アプリに関するお問い合わせは、リポジトリのオーナーまでご連絡ください。</p>
+</body>
+</html>
+"""
+
+
+def render_terms_html():
+    return f"""<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>利用規約 | マツコ返信文作成アプリ</title>
+<style>{LEGAL_STYLE}</style>
+</head>
+<body>
+<h1>利用規約</h1>
+<p>本アプリケーション「マツコ・デラックス思考パターン返信文作成アプリ」（以下「本アプリ」）は、
+開発者個人が私的に利用するためのツールです。</p>
+
+<h2>利用目的</h2>
+<p>本アプリは、開発者が管理する Google Drive フォルダ内のポスト一覧を読み込み、
+X への返信文候補を作成・表示する目的にのみ使用されます。</p>
+
+<h2>免責事項</h2>
+<p>本アプリの利用により生じたいかなる損害についても、開発者は責任を負いません。
+本アプリは予告なく内容を変更・停止する場合があります。</p>
+
+<h2>お問い合わせ</h2>
+<p>本アプリに関するお問い合わせは、リポジトリのオーナーまでご連絡ください。</p>
+</body>
+</html>
+"""
+
+
 def main():
     date_str = os.environ.get("TARGET_DATE") or today_jst_str()
     filename = f"uranai_reposts_{date_str}.md"
@@ -505,6 +573,10 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(os.path.join(OUTPUT_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(render_html(date_str, posts, status, replies, generated_at))
+    with open(os.path.join(OUTPUT_DIR, "privacy.html"), "w", encoding="utf-8") as f:
+        f.write(render_privacy_html())
+    with open(os.path.join(OUTPUT_DIR, "terms.html"), "w", encoding="utf-8") as f:
+        f.write(render_terms_html())
 
     print(f"[SUCCESS] {OUTPUT_DIR}/index.html を生成しました（{len(posts)}件、対象日={date_str}）。")
 
