@@ -445,7 +445,7 @@ def render_html(date_str, posts, status, replies, generated_at):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>マツコ返信文 投稿一覧</title>
+<title>uranai repost - マツコ返信文 投稿一覧</title>
 <style>{STYLE}</style>
 </head>
 <body>
@@ -491,12 +491,12 @@ def render_privacy_html():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>プライバシーポリシー | マツコ返信文作成アプリ</title>
+<title>プライバシーポリシー | uranai repost</title>
 <style>{LEGAL_STYLE}</style>
 </head>
 <body>
 <h1>プライバシーポリシー</h1>
-<p>本アプリケーション「マツコ・デラックス思考パターン返信文作成アプリ」（以下「本アプリ」）は、
+<p>本アプリケーション「uranai repost」（マツコ・デラックス思考パターン返信文作成アプリ、以下「本アプリ」）は、
 開発者個人が私的に利用するためのツールであり、一般公開・第三者への提供は行っていません。</p>
 
 <h2>取得する情報</h2>
@@ -521,12 +521,12 @@ def render_terms_html():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>利用規約 | マツコ返信文作成アプリ</title>
+<title>利用規約 | uranai repost</title>
 <style>{LEGAL_STYLE}</style>
 </head>
 <body>
 <h1>利用規約</h1>
-<p>本アプリケーション「マツコ・デラックス思考パターン返信文作成アプリ」（以下「本アプリ」）は、
+<p>本アプリケーション「uranai repost」（マツコ・デラックス思考パターン返信文作成アプリ、以下「本アプリ」）は、
 開発者個人が私的に利用するためのツールです。</p>
 
 <h2>利用目的</h2>
