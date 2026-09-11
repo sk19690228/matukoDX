@@ -1,9 +1,6 @@
 name: Publish Post List to GitHub Pages
 
 on:
-  schedule:
-    # JST 05:00-22:00 の間、30分おきに一覧を更新（UTC 20:00-翌13:00）
-    - cron: '0,30 20-23,0-13 * * *'
   workflow_dispatch:
     inputs:
       date:
